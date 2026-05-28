@@ -1,0 +1,52 @@
+services:
+  bridge-chromadb:
+    image: chromadb/chroma:latest
+    container_name: bridge-chromadb
+    ports:
+      - "8000:8000"
+    environment:
+      - ANONYMIZED_TELEMETRY=False
+    volumes:
+      - ./chroma_db:/chroma/chroma
+    restart: unless-stopped
+
+  bridge-indexer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bridge-indexer
+    command: python -m rag.indexer
+    volumes:
+      - ./documents:/app/documents
+      - ./chroma_db:/app/chroma_db
+      - ./gdid/gdid.json:/app/gdid/gdid.json
+    env_file:
+      - .env
+    environment:
+      - ANONYMIZED_TELEMETRY=False
+    depends_on:
+      - bridge-chromadb
+    restart: "no"
+
+  bridge-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bridge-app
+    command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./documents:/app/documents
+      - ./chroma_db:/app/chroma_db
+      - ./gdid/gdid.json:/app/gdid/gdid.json
+    env_file:
+      - .env
+    environment:
+      - ANONYMIZED_TELEMETRY=False
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      bridge-indexer:
+        condition: service_completed_successfully
+    restart: unless-stopped

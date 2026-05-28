@@ -1,0 +1,17 @@
+streamlit==1.40.2
+langchain==0.2.16
+langchain-community==0.2.16
+chromadb==0.5.3
+sentence-transformers==2.7.0
+torch==2.3.1
+PyPDF2==3.0.1
+python-dotenv==1.0.0
+pydantic==2.8.2
+requests==2.32.3
+reportlab==4.4.10
+posthog<3.0.0
+
+# Dev only - ne pas inclure en prod :
+# pytest
+# black
+# ruff

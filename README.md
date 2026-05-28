@@ -9,9 +9,7 @@ local corpus, compare disciplinary perspectives, detect polysemous terms, and
 validate terminology bridges in a dynamic interdisciplinary glossary.
 
 > Université Mohammed V de Rabat, Département MIS, 2026  
-> Authors: Ahrim Hamza, Mouafiq Saad  
-> Supervisor: Pr. Bennis
-
+> Authors: Ahrim Hamza 
 ## What BRIDGE Does
 
 - Routes a user question to Finance and/or Computer Science agents.
@@ -260,5 +258,5 @@ source fidelity, or production-grade reliability. Known limitations include:
 
 ## License
 
-No license has been declared yet. Add a license before public reuse or external
-distribution.
+BRIDGE IS AN OPEN-SOURCE PROJECT
+
